@@ -1,26 +1,36 @@
-const express = require('express');
+require("dotenv").config(); // Ensure environment variables are loaded first
+require("./Models/db"); // Database connection should be initialized after dotenv
+
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const AuthRouter = require("./Routes/AuthRouter");
+
 const app = express();
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const AuthRouter = require('./Routes/AuthRouter');
-
-require('dotenv').config();
-require('./Models/db');
-
 const PORT = process.env.PORT || 8080;
 
+// Middleware setup
+app.use(cors()); // Ensure this comes first
 app.use(bodyParser.json());
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-console.log("Server setup initialized");
+console.log("✅ Server setup initialized");
 
-app.get('/ping', (req, res) => {
-    res.send('PONG');
+// Test route
+app.get("/", (req, res) => {
+  res.send("✅ Backend is running successfully!");
 });
 
-app.use('/auth', AuthRouter);  
+// Health check route
+app.get("/ping", (req, res) => {
+  res.send("PONG");
+});
+
+// Routes
+app.use("/auth", AuthRouter);
+
+// Start server
 app.listen(PORT, () => {
-    console.log(`Server is running on ${PORT}`);
+  console.log(`🚀 Server is running on port ${PORT}`);
 });
