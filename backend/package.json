@@ -6,6 +6,9 @@
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
+  "engines": {
+    "node": "18.x"
+  },
   "author": "Siva Ganesh <sivaganeshragam2004@gmail.com>",
   "license": "ISC",
   "type": "commonjs",
